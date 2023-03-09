@@ -15,8 +15,14 @@ const tokenValidator = async (req,res,next) => {
     const result = await data.json();
     console.log(result);
 
-    //console.log(checkValid.status, checkValid.valid);
-    next();
+    if(!result.message){
+        return res.status(401).json({message: "Invalid Token"});
+    }
+    else{
+
+        //console.log(checkValid.status, checkValid.valid);
+        next();
+    }
 };
 
 module.exports = { tokenValidator };
