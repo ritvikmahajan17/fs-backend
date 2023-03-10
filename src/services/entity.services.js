@@ -5,9 +5,10 @@ const getEntitiesByTypeId = async (id) => {
 };
 
 const createEntity = async (id,body) => {
+    console.log(body);
     return await entries.create({
         typeId: id,
-        data: body.data,
+        data: body,
     });
 };
 

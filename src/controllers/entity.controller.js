@@ -19,6 +19,7 @@ const getEntitiesByTypeId = async (req, res) => {
 
 const createEntity = async (req, res) => {
     try {
+        console.log(req.body);
         const entity = await services.createEntity(req.params.id,req.body);
         res.status(201).json(entity);
     }
