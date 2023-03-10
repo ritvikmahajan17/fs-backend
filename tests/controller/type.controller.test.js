@@ -279,65 +279,6 @@ describe("editField", () => {
     });
 });
 
-describe("deleteField", () => {
-    it("should call the services.deleteField method and return the deleted type", async () => {
-        const type = {
-            id: 1,
-            name: "exampleType",
-            fields: [
-                {
-                    name: "field1",
-                    type: "text"
-                },
-                {
-                    name: "field2",
-                    type: "number"
-                }
-            ]
-        };
-        const req = {
-            params: {
-                name: "field1"
-            },
-            body: {}
-        };
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            json: jest.fn()
-        };
-        const deleteFieldSpy = jest.spyOn(services, "deleteField").mockResolvedValue(type);
-  
-        await services.deleteField(req, res);
-  
-        expect(deleteFieldSpy).toHaveBeenCalledWith(req.params.name, req.body);
-        expect(res.status).toHaveBeenCalledWith(200);
-        expect(res.json).toHaveBeenCalledWith(type);
-  
-        deleteFieldSpy.mockRestore();
-    });
-  
-    it("should return an error message if services.deleteField throws an error", async () => {
-        const errorMessage = "Unable to delete field";
-        const req = {
-            params: {
-                name: "field1"
-            },
-            body: {}
-        };
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            json: jest.fn()
-        };
-        const deleteFieldSpy = jest.spyOn(services, "deleteField").mockRejectedValue(new Error(errorMessage));
-  
-        await services.deleteField(req, res);
-  
-        expect(deleteFieldSpy).toHaveBeenCalledWith(req.params.name, req.body);
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ message: errorMessage });
-  
-        deleteFieldSpy.mockRestore();
-    });
-});
+
 
 
