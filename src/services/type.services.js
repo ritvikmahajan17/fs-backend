@@ -1,4 +1,5 @@
 const {type} = require("../../database/models");
+const {entries} = require("../../database/models");
 const { HTTPError } = require("../error/error");
 
 const getAllTypes = async () => {
@@ -72,15 +73,26 @@ const editField = async (name, body) => {
 };
 
 const deleteField = async (name,body) => {
+    
     const typeDetails = await type.findOne({where: {typeName: name}});
     if (!typeDetails) {
         throw new HTTPError("Type not found",404);
     }
     const fields = typeDetails.fields;
+    // console.log(fields,body.field);
     const field = fields.find(field => field === body.field);
     if (!field) {
         throw new HTTPError("Field not found",404);
     }
+    const id = typeDetails.id;
+    const entriesDetails = await entries.findAll({where: {typeId: id}});
+    // console.log(entriesDetails);
+    entriesDetails.forEach(async (entry) => {
+        const data = entry.data;
+        delete data[body.field];
+        await entries.update({data: data}, {where: {id: entry.id}});
+    });
+    
     const index = fields.indexOf(field);
     fields.splice(index, 1);
     const updatedType = await type.update({fields: fields}, {where: {typeName: name}});

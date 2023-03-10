@@ -106,7 +106,7 @@ const deleteField = async (req, res) => {
             res.status(error.code).json({ message: error.message });
         }
         else{
-            res.status(500).json(error);
+            res.status(500).json(error.message);
         }
     }
 };

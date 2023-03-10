@@ -19,7 +19,7 @@ const getEntitiesByTypeId = async (req, res) => {
 
 const createEntity = async (req, res) => {
     try {
-        console.log(req.body);
+        console.log("create");
         const entity = await services.createEntity(req.params.id,req.body);
         res.status(201).json(entity);
     }
@@ -35,6 +35,7 @@ const createEntity = async (req, res) => {
 
 const updateEntity = async (req, res) => {
     try {
+        console.log(req.body);
         const entity = await services.updateEntity(req.params.id, req.body);
         res.status(200).json(entity);
     }
@@ -63,4 +64,19 @@ const deleteEntity = async (req, res) => {
     }
 };
 
-module.exports = { getEntitiesByTypeId, createEntity, updateEntity, deleteEntity };
+const getEntryNumberOfEachType = async (req, res) => {
+    try {
+        const entity = await services.getEntryNumberOfEachType();
+        res.status(200).json(entity);
+    }
+    catch (error) {
+        if (error instanceof HTTPError) {
+            res.status(error.code).json({ message: error.message });
+        }
+        else{
+            res.status(500).json(error);
+        }
+    }
+};
+
+module.exports = { getEntitiesByTypeId, createEntity, updateEntity, deleteEntity, getEntryNumberOfEachType };

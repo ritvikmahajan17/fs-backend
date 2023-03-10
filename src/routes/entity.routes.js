@@ -5,8 +5,9 @@ const entityController = require("../controllers/entity.controller");
 
 entityRouter.get("/:id", entityController.getEntitiesByTypeId); 
 entityRouter.post("/:id", entityController.createEntity);
-entityRouter.put("/:id", entityController.updateEntity);
+entityRouter.patch("/:id", entityController.updateEntity);
 entityRouter.delete("/:id", entityController.deleteEntity);
+entityRouter.get("/", entityController.getEntryNumberOfEachType);
 
 
 
